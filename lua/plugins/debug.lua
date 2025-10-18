@@ -11,6 +11,14 @@ return {
     local dap = require 'dap'
     local dapui = require 'dapui'
 
+    dap.set_log_level 'TRACE'
+
+    vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+    vim.fn.sign_define('DapBreakpointCondition', { text = '◆', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+    vim.fn.sign_define('DapBreakpointRejected', { text = '○', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+    vim.fn.sign_define('DapStopped', { text = '→', texthl = 'DapStopped', linehl = 'DapStopped', numhl = '' })
+    vim.fn.sign_define('DapLogPoint', { text = '◆', texthl = 'DapLogPoint', linehl = '', numhl = '' })
+
     require('mason-nvim-dap').setup {
       automatic_setup = true,
       handlers = {},
@@ -53,5 +61,38 @@ return {
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
     require('dap-go').setup()
+
+    for _, method in ipairs { 'pwa-node', 'node2', 'pwa-chrome' } do
+      dap.adapters[method] = {
+        type = 'server',
+        host = 'localhost',
+        port = '${port}',
+        executable = {
+          command = 'js-debug-adapter',
+          args = { '${port}' },
+        },
+      }
+    end
+
+    -- Jest debug configuration
+    dap.configurations.javascript = {
+      {
+        type = 'pwa-node',
+        request = 'launch',
+        name = 'Debug Jest Test',
+        program = '${file}',
+        cwd = '${workspaceFolder}',
+        runtimeArgs = {
+          './node_modules/.bin/jest',
+          '--runInBand',
+          '--no-cache',
+        },
+        rootPath = '${workspaceFolder}',
+        console = 'integratedTerminal',
+        internalConsoleOptions = 'neverOpen',
+      },
+    }
+
+    dap.configurations.typescript = dap.configurations.javascript
   end,
 }
