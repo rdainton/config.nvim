@@ -33,7 +33,7 @@ vim.keymap.set('n', '<D-s>', '<cmd>w<CR>', { desc = 'Save' })
 vim.keymap.set('i', '<D-s>', '<C-o><cmd>w<CR>', { desc = 'Save' })
 
 -- File explorer
-vim.keymap.set('n', '<leader>t', ':Explore<CR>', { desc = 'Open file [T]ree explorer' })
+vim.keymap.set('n', '<D-b>', ':Explore<CR>', { desc = 'Open file [T]ree explorer' })
 
 -- Centered view toggle
 vim.keymap.set('n', '<leader>z', '<cmd>Centerpad 20<cr>', { desc = 'Toggle centered view' })
