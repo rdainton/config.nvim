@@ -15,10 +15,10 @@ return {
       typescript = { 'prettierd', 'prettier' },
       typescriptreact = { 'prettierd', 'prettier' },
       javascriptreact = { 'prettierd', 'prettier' },
-      -- javascript = { 'biome' },
-      -- typescript = { 'biome' },
-      -- typescriptreact = { 'biome' },
-      -- javascriptreact = { 'biome' },
+      -- javascript = { 'biome-check' },
+      -- typescript = { 'biome-check' },
+      -- typescriptreact = { 'biome-check' },
+      -- javascriptreact = { 'biome-check' },
     },
     formatters = {
       ['biome-check'] = function()
